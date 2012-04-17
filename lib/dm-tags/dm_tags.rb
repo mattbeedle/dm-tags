@@ -64,7 +64,7 @@ module DataMapper
             alias_method :#{singular}_collection=, :#{singular}_list=
 
             def update_#{association}
-              self.#{association} = @#{singular}_list.map do |name|
+              self.#{association} = #{singular}_list.map do |name|
                 Tag.first_or_new(:name => name)
               end
 
