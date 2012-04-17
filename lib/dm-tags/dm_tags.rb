@@ -57,12 +57,14 @@ module DataMapper
 
             def #{singular}_list=(string)
               @#{singular}_list = string.to_s.split(',').map { |name| name.gsub(/[^\\w\\s_-]/i, '').strip }.uniq.sort
+
+              update_#{association}
             end
 
             alias_method :#{singular}_collection=, :#{singular}_list=
 
             def update_#{association}
-              self.#{association} = #{singular}_list.map do |name|
+              self.#{association} = @#{singular}_list.map do |name|
                 Tag.first_or_new(:name => name)
               end
 
